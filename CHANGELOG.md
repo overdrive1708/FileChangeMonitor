@@ -7,8 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] - 2019-07-21
+
 ### Added
 
 - Initial version.
 
 [Unreleased]: https://github.com/overdrive1708/FileChangeMonitor
+[1.0.0]: https://github.com/overdrive1708/FileChangeMonitor/releases/tag/Ver.1.0.0

@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29102.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileChangeMonitor", "FileChangeMonitor.csproj", "{40C395D9-9776-495B-BD25-FADE886A7C5A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{40C395D9-9776-495B-BD25-FADE886A7C5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40C395D9-9776-495B-BD25-FADE886A7C5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40C395D9-9776-495B-BD25-FADE886A7C5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40C395D9-9776-495B-BD25-FADE886A7C5A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8618A6F1-AAA0-42CB-92FC-121BFB0417E7}
+	EndGlobalSection
+EndGlobal

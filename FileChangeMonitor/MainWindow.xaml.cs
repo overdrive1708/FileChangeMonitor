@@ -3,6 +3,8 @@ using System.Windows.Controls;
 using System.Data.SQLite;
 using System.Data;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FileChangeMonitor
 {
@@ -147,21 +149,26 @@ namespace FileChangeMonitor
             {
                 if (System.IO.File.Exists("MonitorFiles.db") == true)
                 {
-                    if (dataGrid.SelectedItem != null)
+                    List<object> items = dataGrid.SelectedItems.Cast<object>().ToList();
+                    if (items.Count != 0)
                     {
-                        string selectedId = ((TextBlock)dataGrid.Columns[1].GetCellContent(dataGrid.SelectedItem)).Text;
-                        var sqlcon = new SQLiteConnection("Data Source = MonitorFiles.db");
-                        sqlcon.Open();
-                        SQLiteCommand createCommand = sqlcon.CreateCommand();
-                        createCommand.CommandText = "DELETE FROM FileInfo where Id = ?";
-                        createCommand.Parameters.Clear();
-                        var Id = new SQLiteParameter { DbType = System.Data.DbType.Int32, Value = selectedId };
-                        createCommand.Parameters.Add(Id);
-                        createCommand.Prepare();
-                        createCommand.ExecuteNonQuery();
-                        sqlcon.Close();
-                        labelNotification.Content = "Notification：Delete selected item is successful.";
-                        ViewDataGrid();
+                        foreach (object item in items)
+                        {
+                            ViewData data = (ViewData)item;
+                            string selectedId = data.Id.ToString();
+                            var sqlcon = new SQLiteConnection("Data Source = MonitorFiles.db");
+                            sqlcon.Open();
+                            SQLiteCommand createCommand = sqlcon.CreateCommand();
+                            createCommand.CommandText = "DELETE FROM FileInfo where Id = ?";
+                            createCommand.Parameters.Clear();
+                            var Id = new SQLiteParameter { DbType = System.Data.DbType.Int32, Value = selectedId };
+                            createCommand.Parameters.Add(Id);
+                            createCommand.Prepare();
+                            createCommand.ExecuteNonQuery();
+                            sqlcon.Close();
+                            labelNotification.Content = "Notification：Delete selected item is successful.";
+                            ViewDataGrid();
+                        }
                     }
                     else
                     {

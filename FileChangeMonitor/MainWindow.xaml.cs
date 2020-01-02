@@ -133,7 +133,7 @@ namespace FileChangeMonitor
                             createCommand.ExecuteNonQuery();
                             sqlcon.Close();
                             labelNotification.Content = "Notification：TimeStamp update is successful.";
-                            ViewDataGrid();
+                            
                         }
                         else
                         {
@@ -151,6 +151,7 @@ namespace FileChangeMonitor
                 labelNotification.Content = "Notification：Database file not found.";
             }
 
+            ViewDataGrid();
             SelectDataGridRow(rowCnt);
         }
 
@@ -179,8 +180,8 @@ namespace FileChangeMonitor
                             createCommand.ExecuteNonQuery();
                             sqlcon.Close();
                             labelNotification.Content = "Notification：Delete selected item is successful.";
-                            ViewDataGrid();
                         }
+                        ViewDataGrid();
                         SelectDataGridRow1Up(rowCnt);
                     }
                     else

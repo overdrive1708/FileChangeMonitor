@@ -104,32 +104,37 @@ namespace FileChangeMonitor
         {
             if (System.IO.File.Exists("MonitorFiles.db") == true)
             {
-                if (dataGrid.SelectedItem != null)
+                List<object> items = dataGrid.SelectedItems.Cast<object>().ToList();
+                if (items.Count != 0)
                 {
-                    string selectedId = ((TextBlock)dataGrid.Columns[1].GetCellContent(dataGrid.SelectedItem)).Text;
-                    string selectedFileName = ((TextBlock)dataGrid.Columns[2].GetCellContent(dataGrid.SelectedItem)).Text;
-                    string selectedFileDir = ((TextBlock)dataGrid.Columns[3].GetCellContent(dataGrid.SelectedItem)).Text;
-                    string selectedFile = System.IO.Path.Combine(selectedFileDir, selectedFileName);
-                    if (System.IO.File.Exists(selectedFile) == true)
+                    foreach (object item in items)
                     {
-                        var sqlcon = new SQLiteConnection("Data Source = MonitorFiles.db");
-                        sqlcon.Open();
-                        SQLiteCommand createCommand = sqlcon.CreateCommand();
-                        createCommand.CommandText = "UPDATE FileInfo SET FileTimeStamp = ? where Id = ?";
-                        createCommand.Parameters.Clear();
-                        var FileTimeStamp = new SQLiteParameter { DbType = System.Data.DbType.String, Value = System.IO.File.GetLastWriteTime(selectedFile) };
-                        createCommand.Parameters.Add(FileTimeStamp);
-                        var Id = new SQLiteParameter { DbType = System.Data.DbType.Int32, Value = selectedId };
-                        createCommand.Parameters.Add(Id);
-                        createCommand.Prepare();
-                        createCommand.ExecuteNonQuery();
-                        sqlcon.Close();
-                        labelNotification.Content = "Notification：TimeStamp update is successful.";
-                        ViewDataGrid();
-                    }
-                    else
-                    {
-                        labelNotification.Content = "Notification：File not found.";
+                        ViewData data = (ViewData)item;
+                        string selectedId = data.Id.ToString();
+                        string selectedFileName = data.FileName.ToString();
+                        string selectedFileDir = data.FileDir.ToString();
+                        string selectedFile = System.IO.Path.Combine(selectedFileDir, selectedFileName);
+                        if (System.IO.File.Exists(selectedFile) == true)
+                        {
+                            var sqlcon = new SQLiteConnection("Data Source = MonitorFiles.db");
+                            sqlcon.Open();
+                            SQLiteCommand createCommand = sqlcon.CreateCommand();
+                            createCommand.CommandText = "UPDATE FileInfo SET FileTimeStamp = ? where Id = ?";
+                            createCommand.Parameters.Clear();
+                            var FileTimeStamp = new SQLiteParameter { DbType = System.Data.DbType.String, Value = System.IO.File.GetLastWriteTime(selectedFile) };
+                            createCommand.Parameters.Add(FileTimeStamp);
+                            var Id = new SQLiteParameter { DbType = System.Data.DbType.Int32, Value = selectedId };
+                            createCommand.Parameters.Add(Id);
+                            createCommand.Prepare();
+                            createCommand.ExecuteNonQuery();
+                            sqlcon.Close();
+                            labelNotification.Content = "Notification：TimeStamp update is successful.";
+                            ViewDataGrid();
+                        }
+                        else
+                        {
+                            labelNotification.Content = "Notification：File not found.";
+                        }
                     }
                 }
                 else

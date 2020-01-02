@@ -39,6 +39,7 @@ namespace FileChangeMonitor
             };
             window.ShowDialog();
             ViewDataGrid();
+            SelectDataGridRowEnd();
         }
 
         private void ViewDataGrid()
@@ -97,11 +98,14 @@ namespace FileChangeMonitor
 
         private void ButtonReCheck_Click(object sender, RoutedEventArgs e)
         {
+            int rowCnt = dataGrid.Items.IndexOf(dataGrid.SelectedItem);
             ViewDataGrid();
+            SelectDataGridRow(rowCnt);
         }
 
         private void ButtonTimeStampUpdate_Click(object sender, RoutedEventArgs e)
         {
+            int rowCnt = dataGrid.Items.IndexOf(dataGrid.SelectedItem);
             if (System.IO.File.Exists("MonitorFiles.db") == true)
             {
                 List<object> items = dataGrid.SelectedItems.Cast<object>().ToList();
@@ -146,10 +150,13 @@ namespace FileChangeMonitor
             {
                 labelNotification.Content = "Notification：Database file not found.";
             }
+
+            SelectDataGridRow(rowCnt);
         }
 
         private void ButtonDelSelected_Click(object sender, RoutedEventArgs e)
         {
+            int rowCnt = dataGrid.Items.IndexOf(dataGrid.SelectedItem);
             if (MessageBox.Show("Do you really want to delete this?", "Caution", MessageBoxButton.YesNo, MessageBoxImage.Exclamation, MessageBoxResult.No) == MessageBoxResult.Yes)
             {
                 if (System.IO.File.Exists("MonitorFiles.db") == true)
@@ -174,19 +181,23 @@ namespace FileChangeMonitor
                             labelNotification.Content = "Notification：Delete selected item is successful.";
                             ViewDataGrid();
                         }
+                        SelectDataGridRow1Up(rowCnt);
                     }
                     else
                     {
+                        SelectDataGridRow(rowCnt);
                         labelNotification.Content = "Notification：Not selected.";
                     }
                 }
                 else
                 {
+                    SelectDataGridRow(rowCnt);
                     labelNotification.Content = "Notification：Database file not found.";
                 }
             }
             else
             {
+                SelectDataGridRow(rowCnt);
                 labelNotification.Content = "Notification：Operation cancelled.";
             }
         }
@@ -214,6 +225,36 @@ namespace FileChangeMonitor
             else
             {
                 labelNotification.Content = "Notification：Operation cancelled.";
+            }
+        }
+
+        private void SelectDataGridRow(int row)
+        {
+            if ((row < 0) || (dataGrid.Items.Count <= row))
+            {
+                return;
+            }
+
+            DataGridCellInfo cellInfo = new DataGridCellInfo(dataGrid.Items[row], dataGrid.Columns[0]);
+            dataGrid.Focus();
+            dataGrid.SelectedIndex = row;
+            dataGrid.CurrentCell = cellInfo;
+        }
+
+        private void SelectDataGridRowEnd()
+        {
+            SelectDataGridRow(dataGrid.Items.Count - 1);
+        }
+
+        private void SelectDataGridRow1Up(int row)
+        {
+            if(row != 0)
+            {
+                SelectDataGridRow(row - 1);
+            }
+            else
+            {
+                SelectDataGridRow(row);
             }
         }
     }

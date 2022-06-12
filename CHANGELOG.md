@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Update solution file.(VS2019=>VS2022)
+- Update Nuget packages.
+
 ## [1.0.0] - 2019-07-21
 
 ### Added

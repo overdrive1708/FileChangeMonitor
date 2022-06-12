@@ -41,7 +41,7 @@ Example:
 
 ## Build
 
-Clone the Git repo, open "FileChangeMonitor.sln" in Visual Studio 2019, and build.  
+Clone the Git repo, open "FileChangeMonitor.sln" in Visual Studio 2022, and build.  
 Make sure you have the System.Data.SQLite.Core installed using NuGet.  
 Make sure you have the System.Data.Linq Referenced.
 
